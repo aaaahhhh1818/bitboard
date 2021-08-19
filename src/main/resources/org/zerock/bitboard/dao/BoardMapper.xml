@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.bitboard.dao.BoardMapper">
+    <insert id="insert">
+        insert into board (title,content,writer)
+        values (#{title}, #{content}, #{writer}) <!-- getter 사용 (브레이스???) -->
+        <selectKey order="AFTER" resultType="int" keyProperty="bno">
+            select last_insert_id() <!--마지막에 insert된 값 가져오기-->
+        </selectKey>
+    </insert>
+
+    <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO">
+        select * from board where bno = #{bno}
+    </select>
+
+    <select id="list" resultType="org.zerock.bitboard.dto.BoardDTO">
+        select * from board where bno > 0 order by bno desc limit #{skip}, #{size} <!--get-->
+    </select>
+
+    <delete id="delete">
+        delete from board where bno = #{bno}
+    </delete>
+
+    <update id="update">
+        update board set title = #{title}, content = #{content}, updatedate = now()
+        where bno = #{bno}
+    </update>
+
+    <select id="selectCount" resultType="int">
+        select count(*) where bno > 0
+    </select>
+
+    <update id="updateViewCount">
+        update board set viewcount = viewcount + 1 where bno = #{bno}
+    </update>
+
+</mapper>
