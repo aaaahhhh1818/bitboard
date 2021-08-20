@@ -38,7 +38,7 @@ public class UploadController extends HttpServlet {
             String type = part.getContentType();
             //log.info(type); //null이 찍히는 이유 -> 일반? 파일이라서
             if (type == null) { //null 일 때 이름먼저 파악
-                log.info("partName: " + part.getName()); //name 값을 가져옴
+                log.info("partName: " + part.getName()); //name을 가져옴
                 return;
             }
 
@@ -51,7 +51,7 @@ public class UploadController extends HttpServlet {
             //파일 업로드
             try (InputStream in = part.getInputStream(); //자동으로 close()
                  OutputStream fos = new FileOutputStream(uploadFolder + File.separator+ System.currentTimeMillis() + "_" + fileName);
-                 //separator : 중간 경로 지정정
+                 //separator : 중간 경로 지정
                 ) {
                     while (true) {
                         int count = in.read(buffer);
