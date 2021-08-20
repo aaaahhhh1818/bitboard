@@ -2,6 +2,7 @@ package org.zerock.bitboard.dao;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSession;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
@@ -19,9 +20,21 @@ public enum BoardDAO {
 
         Integer bno = null;
 
-        try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {
+        try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) { //true가 아닐 때 문제 생길 수 잇음
             session.insert(PREFIX + ".insert", boardDTO);
-            bno = boardDTO.getBno();
+            bno = boardDTO.getBno(); //bno 땀 //boardDTO 안에 첨부파일 여러개
+
+            List<AttachDTO> attachDTOList = boardDTO.getAttachDTOList();
+
+            if (attachDTOList != null && attachDTOList.size() > 0) { //첨부파일 없을 때 문제 일어나지 않게
+                for (AttachDTO attachDTO : attachDTOList) {
+                    //가지고온 bno값을 넣어줘야 함
+                    attachDTO.setBno(bno);
+                    session.insert(PREFIX + ".insertAttach", attachDTO);
+                }
+            }
+            session.commit();
+
         }catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());

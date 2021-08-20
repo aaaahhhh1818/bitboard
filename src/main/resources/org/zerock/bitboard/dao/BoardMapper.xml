@@ -11,6 +11,11 @@
         </selectKey>
     </insert>
 
+    <insert id="insertAttach">
+        insert into attach(bno, fname, savename, imgyn)
+        values (#{bno},#{fname},#{savename},#{imgyn})
+    </insert>
+
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO">
         select * from board where bno = #{bno}
     </select>
