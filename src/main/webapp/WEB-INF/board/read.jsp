@@ -11,9 +11,18 @@
     <title>Title</title>
 </head>
 <body>
-    <div>${boardDTO}</div>
-    <div>${pageDTO}</div>
-
-    <a href="/board/list?page=${pageDTO.page}&size=${pageDTO.size}">목록가기</a>
+<div>${boardDTO}</div>
+<div>${pageDTO}</div>
+<form action="/board/delete" method="post">
+    <input type="hidden" name="bno" value="${boardDTO.bno}" readonly>
+    <input type="text" name="title" value="${boardDTO.title}" readonly>
+    <input type="text" name="content" value="${boardDTO.content}" readonly>
+    <input type="text" name="writer" value="${boardDTO.writer}" readonly>
+    <input type="text" name="regdate" value="${boardDTO.regdate}" readonly>
+    <input type="text" name="updatedate" value="${boardDTO.updatedate}" readonly>
+    <button type="submit">삭제하기</button>
+</form>
+<a href="/board/update?bno=${boardDTO.bno}">수정하기</a>
+<a href="/board/list?page=${pageDTO.page}&size=${pageDTO.size}">목록가기</a>
 </body>
 </html>

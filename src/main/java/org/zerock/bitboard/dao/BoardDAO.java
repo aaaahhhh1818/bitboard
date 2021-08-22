@@ -49,8 +49,7 @@ public enum BoardDAO {
         BoardDTO dto = null;
 
         try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {
-            BoardDTO boardDTO = session.selectOne(PREFIX + ".select", bno); //파라미터 여러개 줄수없음
-            session.commit();
+            dto = session.selectOne(PREFIX + ".select", bno); //파라미터 여러개 줄수없음
         }catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
@@ -82,11 +81,12 @@ public enum BoardDAO {
 
     }
 
-    public void update(BoardDTO dto) throws RuntimeException {
+    public void update(BoardDTO boardDTO)throws RuntimeException {
 
-        try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {
-            session.update(PREFIX + ".update", dto);
-        } catch (Exception e) {
+        try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
+            session.update(PREFIX+".update", boardDTO);
+            session.commit();
+        }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }

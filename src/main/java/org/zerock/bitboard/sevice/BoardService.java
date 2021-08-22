@@ -5,13 +5,25 @@ import org.zerock.bitboard.dao.BoardDAO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
 public enum BoardService {
 
     INSTANCE;
+
+
+    public void delete(Integer bno) throws RuntimeException {
+
+        BoardDAO.INSTANCE.delete(bno);
+
+    }
+
+    public void update(BoardDTO boardDTO) throws RuntimeException {
+
+        BoardDAO.INSTANCE.update(boardDTO);
+
+    }
 
     public Integer register(BoardDTO boardDTO) throws RuntimeException {
 
