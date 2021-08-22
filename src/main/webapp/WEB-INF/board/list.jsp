@@ -6,21 +6,22 @@
 </head>
 <body>
 
+alert(num) //브라우저 멈춰 !!! 뒤로 가기해도 경고창 뜸
 <script>
-
-    let num = '${param.bno}' //url에 있는 파라미터 추출
-
     if(num) { //num 값이 널이라면 실행안함
-        alert(num) //브라우저 멈춰 !!! 뒤로 가기해도 경고창 뜸
         window.history.replaceState(null, '', '/board/list'); //뒤로가기 했을 때 url 값 처리
     }
 
 </script>
+let num = '${param.bno}' //url에 있는 파라미터 추출
+
+
 
 <h1>List page</h1>
 
 <h4>${pageMaker}</h4>
 
+<a href="/board/register">글쓰기</a>
 <form action="/board/list" method="get">
     <input type="hidden" name="page" value="1"> <!--폼 창 기본값 설정-->
     <select name="size">
@@ -80,6 +81,7 @@
         <li><a href="/board/list?page=${pageMaker.end +1}&size=${pageMaker.size}">NEXT</a></li>
     </c:if>
 </ul>
+
 
 </body>
 </html>
